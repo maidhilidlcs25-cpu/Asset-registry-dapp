@@ -4,6 +4,10 @@ A simple decentralized application (DApp) built using **Solidity, Ethers.js, and
 This DApp allows users to **register an asset** and **transfer ownership** of an existing asset.  
 It interacts with a smart contract deployed on the **Sepolia Test Network**.
 
+**The demo is live on this link:**  
+(https://maidhilidlcs25-cpu.github.io/Asset-registry-dapp/)
+
+
 ---
 
 ## Project Description
@@ -37,8 +41,8 @@ This project demonstrates a basic end-to-end decentralized application workflow 
 **Contract Address:**  
 0xAdD199b894cF5f0aba97C38261A2B04023a72873  
 
-**The demo is live on this link:**  
-(https://maidhilidlcs25-cpu.github.io/Asset-registry-dapp/)
+**The Etherscan link:**  
+(https://sepolia.etherscan.io/address/0xAdD199b894cF5f0aba97C38261A2B04023a72873)
 
 
 
