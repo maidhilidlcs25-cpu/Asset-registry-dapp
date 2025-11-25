@@ -124,4 +124,5 @@ Enter an ID → Click **Check Owner** → Owner address displayed.
 ------------------------------------------------------------------------
 ## 📸 Screenshot of the DApp
 
-![Asset Registry UI](Screenshot 2025-11-26 010950.png)
+![Asset Registry UI](./Screenshot%202025-11-26%20010950.png)
+
