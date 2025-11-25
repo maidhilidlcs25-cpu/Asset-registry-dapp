@@ -3,7 +3,6 @@
 <head>
     <title>Asset Registry DApp</title>
     <script src="https://cdn.jsdelivr.net/npm/web3@1.10.0/dist/web3.min.js"></script>
-
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -18,9 +17,7 @@
             border-radius: 10px;
             box-shadow: 0px 0px 10px #ccc;
         }
-        h2, h3 {
-            color: #333;
-        }
+        h2 { color: #333; }
         input {
             width: 100%;
             padding: 10px;
@@ -49,114 +46,135 @@
             display: none;
         }
     </style>
-
 </head>
-
 <body>
-    <div class="container">
-        <h2>Asset Registry DApp</h2>
 
-        <button onclick="connectWallet()">Connect Wallet</button>
-        <p id="walletAddress"></p>
+<div class="container">
 
-        <h3>Register Asset</h3>
+    <h2>Asset Registry DApp</h2>
 
-        <input type="text" id="regId" placeholder="Asset ID">
-        <input type="text" id="regName" placeholder="Asset Name">  <!-- NEW FIELD ADDED -->
-        <input type="text" id="regDesc" placeholder="Description">
-        <button onclick="registerAsset()">Register</button>
+    <button onclick="connectWallet()">Connect Wallet</button>
+    <p id="walletAddress"></p>
 
-        <h3>View Asset</h3>
-        <input type="text" id="viewId" placeholder="Asset ID">
-        <button onclick="viewAsset()">View</button>
-        <p id="assetDetails"></p>
+    <h3>Register Asset</h3>
+    <input type="text" id="regId" placeholder="Asset ID">
+    <input type="text" id="regName" placeholder="Asset Name">
+    <input type="text" id="regDesc" placeholder="Description">
+    <button onclick="registerAsset()">Register</button>
 
-        <h3>Transfer Ownership</h3>
-        <input type="text" id="transferId" placeholder="Asset ID">
-        <input type="text" id="newOwner" placeholder="New Owner Address">
-        <button onclick="transferAsset()">Transfer</button>
+    <h3>View Asset</h3>
+    <input type="text" id="viewId" placeholder="Asset ID">
+    <button onclick="viewAsset()">View</button>
+    <p id="assetDetails"></p>
 
-        <div id="message"></div>
+    <h3>Transfer Ownership</h3>
+    <input type="text" id="transferId" placeholder="Asset ID">
+    <input type="text" id="newOwner" placeholder="New Owner Address">
+    <button onclick="transferAsset()">Transfer</button>
 
-    </div>
+    <div id="message"></div>
+
+</div>
 
 <script>
-    let web3;
-    let contract;
-    let userAccount;
 
-    const contractAddress = "0x694d741E7FAFdb7517487D27931B4964Bd61095E";
+let web3;
+let contract;
+let userAccount;
 
-    const abi = YOUR_ABI_HERE;  // Replace with your full ABI
+// 🔹 NEW Contract Address
+const contractAddress = "0x8be1924B43917e1F65a2d930e86Db18791eabFbc";
 
-    async function connectWallet() {
-        if (window.ethereum) {
-            await ethereum.request({ method: "eth_requestAccounts" });
-            web3 = new Web3(window.ethereum);
-
-            const accounts = await web3.eth.getAccounts();
-            userAccount = accounts[0];
-
-            document.getElementById("walletAddress").innerText =
-                "Connected: " + userAccount;
-
-            contract = new web3.eth.Contract(abi, contractAddress);
-
-            showMessage("Wallet connected successfully!");
-        } else {
-            showMessage("Please install MetaMask.");
-        }
+// 🔹 NEW ABI
+const abi = [
+    {
+        "anonymous": false,
+        "inputs": [
+            { "indexed": false, "internalType": "string", "name": "assetId", "type": "string" },
+            { "indexed": false, "internalType": "string", "name": "assetName", "type": "string" },
+            { "indexed": false, "internalType": "string", "name": "description", "type": "string" },
+            { "indexed": false, "internalType": "address", "name": "owner", "type": "address" }
+        ],
+        "name": "AssetRegistered",
+        "type": "event"
+    },
+    {
+        "anonymous": false,
+        "inputs": [
+            { "indexed": false, "internalType": "string", "name": "assetId", "type": "string" },
+            { "indexed": false, "internalType": "address", "name": "from", "type": "address" },
+            { "indexed": false, "internalType": "address", "name": "to", "type": "address" }
+        ],
+        "name": "OwnershipTransferred",
+        "type": "event"
+    },
+    {
+        "inputs": [
+            { "internalType": "string", "name": "_assetId", "type": "string" },
+            { "internalType": "string", "name": "_assetName", "type": "string" },
+            { "internalType": "string", "name": "_description", "type": "string" }
+        ],
+        "name": "registerAsset",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            { "internalType": "string", "name": "_assetId", "type": "string" },
+            { "internalType": "address", "name": "newOwner", "type": "address" }
+        ],
+        "name": "transferAsset",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            { "internalType": "string", "name": "", "type": "string" }
+        ],
+        "name": "assets",
+        "outputs": [
+            { "internalType": "string", "name": "assetId", "type": "string" },
+            { "internalType": "string", "name": "assetName", "type": "string" },
+            { "internalType": "string", "name": "description", "type": "string" },
+            { "internalType": "address", "name": "owner", "type": "address" }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            { "internalType": "string", "name": "_assetId", "type": "string" }
+        ],
+        "name": "getAsset",
+        "outputs": [
+            { "internalType": "string", "name": "", "type": "string" },
+            { "internalType": "string", "name": "", "type": "string" },
+            { "internalType": "string", "name": "", "type": "string" },
+            { "internalType": "address", "name": "", "type": "address" }
+        ],
+        "stateMutability": "view",
+        "type": "function"
     }
+];
 
-    async function registerAsset() {
-        const id = document.getElementById("regId").value;
-        const name = document.getElementById("regName").value;
-        const desc = document.getElementById("regDesc").value;
 
-        try {
-            await contract.methods.registerAsset(id, name, desc)
-                .send({ from: userAccount });
-
-            showMessage("Asset registered successfully!");
-        } catch (error) {
-            showMessage("Error: " + error.message);
-        }
+async function connectWallet() {
+    if (window.ethereum) {
+        await ethereum.request({ method: "eth_requestAccounts" });
+        web3 = new Web3(window.ethereum);
+        const accounts = await web3.eth.getAccounts();
+        userAccount = accounts[0];
+        document.getElementById("walletAddress").innerText = "Connected: " + userAccount;
+        contract = new web3.eth.Contract(abi, contractAddress);
+        showMessage("Wallet connected successfully!");
+    } else {
+        showMessage("Please install MetaMask.");
     }
+}
 
-    async function viewAsset() {
-        const id = document.getElementById("viewId").value;
-
-        try {
-            const result = await contract.methods.getAsset(id).call();
-
-            document.getElementById("assetDetails").innerText =
-                `ID: ${result[0]}\nName: ${result[1]}\nDescription: ${result[2]}\nOwner: ${result[3]}`;
-
-        } catch (error) {
-            showMessage("Asset not found.");
-        }
-    }
-
-    async function transferAsset() {
-        const id = document.getElementById("transferId").value;
-        const newOwner = document.getElementById("newOwner").value;
-
-        try {
-            await contract.methods.transferAsset(id, newOwner)
-                .send({ from: userAccount });
-
-            showMessage("Ownership transferred!");
-        } catch (error) {
-            showMessage("Error: " + error.message);
-        }
-    }
-
-    function showMessage(msg) {
-        let box = document.getElementById("message");
-        box.style.display = "block";
-        box.innerText = msg;
-    }
-</script>
-
-</body>
-</html>
+async function registerAsset() {
+    const id = document.getElementById("regId").value;
+    const name = document.getElementById("regName").value;
+    const desc = document.getElementById("regDes
