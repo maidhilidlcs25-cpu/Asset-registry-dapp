@@ -33,11 +33,12 @@ This project demonstrates a basic end-to-end decentralized application workflow 
 ## Smart Contract Details
 
 **Network Used:** Sepolia Test Network  
+
 **Contract Address:**  
 `<YOUR_CONTRACT_ADDRESS_HERE>`  
 
 **Etherscan Link:**  
-`https://sepolia.etherscan.io/address/<YOUR_CONTRACT_ADDRESS_HERE>`
+(https://maidhilidlcs25-cpu.github.io/Asset-registry-dapp/)
 
 
 
