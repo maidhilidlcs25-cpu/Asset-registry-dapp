@@ -1,180 +1,46 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Asset Registry DApp</title>
-    <script src="https://cdn.jsdelivr.net/npm/web3@1.10.0/dist/web3.min.js"></script>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background: #f3f3f3;
-            padding: 40px;
-        }
-        .container {
-            background: white;
-            padding: 25px;
-            max-width: 600px;
-            margin: auto;
-            border-radius: 10px;
-            box-shadow: 0px 0px 10px #ccc;
-        }
-        h2 { color: #333; }
-        input {
-            width: 100%;
-            padding: 10px;
-            margin-top: 8px;
-            margin-bottom: 15px;
-            border: 1px solid #bbb;
-            border-radius: 5px;
-        }
-        button {
-            background: #4CAF50;
-            color: white;
-            border: none;
-            padding: 10px 15px;
-            cursor: pointer;
-            border-radius: 5px;
-            margin-bottom: 20px;
-        }
-        button:hover {
-            background: #45a049;
-        }
-        #message {
-            background: #eef;
-            padding: 15px;
-            border-radius: 5px;
-            margin-top: 10px;
-            display: none;
-        }
-    </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Asset Registry</title>
+    <script src="https://cdn.jsdelivr.net/npm/ethers/dist/ethers.min.js"></script>
 </head>
 <body>
 
-<div class="container">
+    <h1>Asset Registry DApp</h1>
 
-    <h2>Asset Registry DApp</h2>
+    <!-- Connect Wallet Section -->
+    <h2>Connect Wallet</h2>
+    <button onclick="connectWallet()">Connect MetaMask</button>
+    <p id="walletAddress">Not connected</p>
 
-    <button onclick="connectWallet()">Connect Wallet</button>
-    <p id="walletAddress"></p>
+    <hr>
 
-    <h3>Register Asset</h3>
-    <input type="text" id="regId" placeholder="Asset ID">
-    <input type="text" id="regName" placeholder="Asset Name">
-    <input type="text" id="regDesc" placeholder="Description">
-    <button onclick="registerAsset()">Register</button>
+    <!-- Register Asset -->
+    <h2>Register Asset</h2>
+    <input type="text" id="regAssetId" placeholder="Asset ID"><br><br>
+    <input type="text" id="regDescription" placeholder="Description"><br><br>
+    <button onclick="registerAsset()">Register Asset</button>
 
-    <h3>View Asset</h3>
-    <input type="text" id="viewId" placeholder="Asset ID">
-    <button onclick="viewAsset()">View</button>
-    <p id="assetDetails"></p>
+    <hr>
 
-    <h3>Transfer Ownership</h3>
-    <input type="text" id="transferId" placeholder="Asset ID">
-    <input type="text" id="newOwner" placeholder="New Owner Address">
-    <button onclick="transferAsset()">Transfer</button>
+    <!-- Transfer Asset -->
+    <h2>Transfer Asset Ownership</h2>
+    <input type="text" id="transAssetId" placeholder="Asset ID"><br><br>
+    <input type="text" id="newOwner" placeholder="New Owner Address"><br><br>
+    <button onclick="transferAsset()">Transfer Ownership</button>
 
-    <div id="message"></div>
+    <hr>
 
-</div>
+    <!-- Get Asset Information -->
+    <h2>Get Asset Information</h2>
+    <input type="text" id="getAssetId" placeholder="Asset ID"><br><br>
+    <button onclick="getAssetInfo()">Get Info</button>
 
-<script>
+    <div id="assetInfo" style="margin-top: 20px; font-size: 18px;"></div>
 
-let web3;
-let contract;
-let userAccount;
+    <script src="app.js"></script>
 
-// 🔹 NEW Contract Address
-const contractAddress = "0x8be1924B43917e1F65a2d930e86Db18791eabFbc";
-
-// 🔹 NEW ABI
-const abi = [
-    {
-        "anonymous": false,
-        "inputs": [
-            { "indexed": false, "internalType": "string", "name": "assetId", "type": "string" },
-            { "indexed": false, "internalType": "string", "name": "assetName", "type": "string" },
-            { "indexed": false, "internalType": "string", "name": "description", "type": "string" },
-            { "indexed": false, "internalType": "address", "name": "owner", "type": "address" }
-        ],
-        "name": "AssetRegistered",
-        "type": "event"
-    },
-    {
-        "anonymous": false,
-        "inputs": [
-            { "indexed": false, "internalType": "string", "name": "assetId", "type": "string" },
-            { "indexed": false, "internalType": "address", "name": "from", "type": "address" },
-            { "indexed": false, "internalType": "address", "name": "to", "type": "address" }
-        ],
-        "name": "OwnershipTransferred",
-        "type": "event"
-    },
-    {
-        "inputs": [
-            { "internalType": "string", "name": "_assetId", "type": "string" },
-            { "internalType": "string", "name": "_assetName", "type": "string" },
-            { "internalType": "string", "name": "_description", "type": "string" }
-        ],
-        "name": "registerAsset",
-        "outputs": [],
-        "stateMutability": "nonpayable",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            { "internalType": "string", "name": "_assetId", "type": "string" },
-            { "internalType": "address", "name": "newOwner", "type": "address" }
-        ],
-        "name": "transferAsset",
-        "outputs": [],
-        "stateMutability": "nonpayable",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            { "internalType": "string", "name": "", "type": "string" }
-        ],
-        "name": "assets",
-        "outputs": [
-            { "internalType": "string", "name": "assetId", "type": "string" },
-            { "internalType": "string", "name": "assetName", "type": "string" },
-            { "internalType": "string", "name": "description", "type": "string" },
-            { "internalType": "address", "name": "owner", "type": "address" }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            { "internalType": "string", "name": "_assetId", "type": "string" }
-        ],
-        "name": "getAsset",
-        "outputs": [
-            { "internalType": "string", "name": "", "type": "string" },
-            { "internalType": "string", "name": "", "type": "string" },
-            { "internalType": "string", "name": "", "type": "string" },
-            { "internalType": "address", "name": "", "type": "address" }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-    }
-];
-
-
-async function connectWallet() {
-    if (window.ethereum) {
-        await ethereum.request({ method: "eth_requestAccounts" });
-        web3 = new Web3(window.ethereum);
-        const accounts = await web3.eth.getAccounts();
-        userAccount = accounts[0];
-        document.getElementById("walletAddress").innerText = "Connected: " + userAccount;
-        contract = new web3.eth.Contract(abi, contractAddress);
-        showMessage("Wallet connected successfully!");
-    } else {
-        showMessage("Please install MetaMask.");
-    }
-}
-
-async function registerAsset() {
-    const id = document.getElementById("regId").value;
-    const name = document.getElementById("regName").value;
-    const desc = document.getElementById("regDes
+</body>
+</html>
