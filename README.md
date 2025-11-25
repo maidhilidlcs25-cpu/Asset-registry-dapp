@@ -4,7 +4,7 @@ This project is a decentralized application (DApp) built on the Ethereum blockch
 
 **Live Demo (GitHub Pages)
 **
-https://yourusername.github.io/asset-registry-dapp/
+https://maidhilidlcs25-cpu.github.io/Asset-registry-dapp/
 
 (Open this link in a browser with MetaMask installed)
 
