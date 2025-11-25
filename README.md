@@ -1,121 +1,124 @@
-Asset Registry DApp
+# 📌 Asset-registry-dApp
 
-This project is a decentralized application (DApp) built on the Ethereum blockchain. It enables users to register assets, view asset details, and transfer ownership securely using a smart contract deployed on the Sepolia test network. The application uses MetaMask for transaction signing and ethers.js for blockchain interaction.
+This project is a decentralized application (dApp) that allows users to
+**register assets on the Ethereum blockchain** using a minimal smart
+contract and a simple HTML/JavaScript frontend.
 
-**Live Demo (GitHub Pages)
-**
-https://maidhilidlcs25-cpu.github.io/Asset-registry-dapp/
+It consists of two main parts:
 
-(Open this link in a browser with MetaMask installed)
+1.  **A Smart Contract (`AssetRegistry.sol`)**\
+    The backend logic that stores asset ownership on the blockchain.
 
-Features
+2.  **A dApp Frontend (`index.html`)**\
+    A lightweight webpage that allows users to connect their wallets and
+    interact with the contract (register an asset + view an asset
+    owner).
 
-Register a new asset with a unique Asset ID
+------------------------------------------------------------------------
 
-Transfer asset ownership to another wallet
+## 🚀 Contract Deployment
 
-Retrieve and display asset information
+**Network:** Sepolia\
+**Contract Address:** *your_contract_address_here*\
+You can view it on Etherscan:\
+`https://sepolia.etherscan.io/address/your_contract_address_here`
 
-Connect and interact with MetaMask
+------------------------------------------------------------------------
 
-Built using ethers.js
+## 🧠 How It Works
 
-Fully functional on the Sepolia Test Network
+The dApp is powered by the **AssetRegistry.sol** smart contract, which
+supports:
 
-Smart Contract Details
-Contract Address
-0x694d741E7FAFdb7517487D27931B4964Bd61095E
+1.  **Register Asset**\
+    Users call `registerAsset(id)` to register an asset.\
+    Each asset ID can be registered only once.
 
-Folder Structure
-asset-registry-dapp/
-│── index.html
-│── script.js
-│── style.css
-│── README.md
-└── assets/ (optional images)
+2.  **Ownership Tracking**\
+    The contract maintains ownership using a Solidity mapping:
 
-Deployment on GitHub Pages
+        mapping(uint256 => address) public assetOwners;
 
-Upload the project files (index.html, script.js, style.css) to your repository.
+3.  **Read Ownership**\
+    Anyone can call `getOwner(id)` to check who owns a specific asset.
 
-Navigate to Settings > Pages.
+4.  **Simple & Minimal**\
+    No tokens, no NFTs --- just a clean registry stored directly
+    on-chain.
 
-In the Pages section:
+------------------------------------------------------------------------
 
-Select main branch
+## 📂 File Structure
 
-Set the folder to root
+    /project-folder
+    │── AssetRegistry.sol     # Smart contract
+    │── index.html            # Frontend UI
+    │── README.md             # This file
 
-Click Save.
+------------------------------------------------------------------------
 
-GitHub will generate a public link within a minute.
+## 📜 Smart Contract (AssetRegistry.sol)
 
-How to Test the DApp
-1. Install MetaMask
+The smart contract includes:
 
-Download from https://metamask.io
+-   A mapping to store asset ownership\
+-   `registerAsset(id)` function\
+-   `getOwner(id)` function\
+-   A restriction so no one can register the same asset twice
 
-2. Switch to Sepolia Test Network
+------------------------------------------------------------------------
 
-Fund your wallet with test ETH using a Sepolia faucet.
+## 🌐 Frontend (index.html)
 
-3. Open the GitHub Pages DApp link
-4. Connect Wallet
+The frontend allows the user to:
 
-Click Connect Wallet and approve in MetaMask.
+-   Connect their MetaMask wallet\
+-   Register an asset by entering an ID\
+-   View the owner of a registered asset\
+-   Interact with the contract using **ethers.js**
 
-Functionalities
-Register an Asset
+No backend needed --- everything runs in the browser.
 
-Enter a unique Asset ID (e.g., A1001).
+------------------------------------------------------------------------
 
-Enter a description (e.g., Laptop).
+## 🛠 How to Run Locally
 
-Click Register Asset.
+### 1️⃣ Clone the repository
 
-Confirm the transaction in MetaMask.
+    git clone https://github.com/yourname/yourrepo.git
+    cd yourrepo
 
-Get Asset Information
+### 2️⃣ Deploy the contract (if not deployed)
 
-Enter the Asset ID.
+Deploy `AssetRegistry.sol` on Sepolia and update your `index.html`:
 
-Click Get Asset.
+``` js
+const contractAddress = "YOUR_DEPLOYED_CONTRACT_ADDRESS";
+```
 
-The application displays:
+### 3️⃣ Open the frontend
 
-Asset ID
+Open `index.html` in your browser (MetaMask required).
 
-Description
-6
+------------------------------------------------------------------------
 
-Current owner address
+## 🧪 Features Demo
 
-Transfer an Asset
+### ✔ Register an Asset
 
-Enter the Asset ID.
+Enter an ID → Click **Register** → MetaMask transaction pops up.
 
-Enter the recipient's wallet address.
+### ✔ Check Asset Owner
 
-Click Transfer.
+Enter an ID → Click **Check Owner** → Owner address displayed.
 
-Confirm in MetaMask.
+------------------------------------------------------------------------
 
-Technologies Used
+## 📘 Technologies Used
 
-Solidity
+-   Solidity\
+-   Ethers.js\
+-   MetaMask\
+-   HTML + JavaScript
 
-Ethereum Sepolia Test Network
-
-Remix IDE
-
-MetaMask
-
-HTML, CSS, JavaScript
-
-ethers.js
-
-GitHub Pages
-
-Purpose of the Project
-
-This project demonstrates how blockchain technology can be applied for tamper-proof asset registration and secure ownership transfer. It highlights decentralized data storage, user-controlled transactions, and transparent record management suitable for academic, research, and enterprise-level applications.
+------------------------------------------------------------------------
