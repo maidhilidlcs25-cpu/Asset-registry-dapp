@@ -1,4 +1,4 @@
-# 📌 Asset-registry-dApp
+# Asset-registry-dApp
 
 This project is a decentralized application (dApp) that allows users to
 **register assets on the Ethereum blockchain** using a minimal smart
@@ -16,7 +16,7 @@ It consists of two main parts:
 
 ------------------------------------------------------------------------
 
-## 🚀 Contract Deployment
+## Contract Deployment
 
 **Network:** Sepolia\
 **Contract Address:** *your_contract_address_here*\
@@ -25,7 +25,7 @@ You can view it on Etherscan:\
 
 ------------------------------------------------------------------------
 
-## 🧠 How It Works
+## How It Works
 
 The dApp is powered by the **AssetRegistry.sol** smart contract, which
 supports:
@@ -48,7 +48,7 @@ supports:
 
 ------------------------------------------------------------------------
 
-## 📂 File Structure
+## File Structure
 
     /project-folder
     │── AssetRegistry.sol     # Smart contract
@@ -57,7 +57,7 @@ supports:
 
 ------------------------------------------------------------------------
 
-## 📜 Smart Contract (AssetRegistry.sol)
+## Smart Contract (AssetRegistry.sol)
 
 The smart contract includes:
 
@@ -68,7 +68,7 @@ The smart contract includes:
 
 ------------------------------------------------------------------------
 
-## 🌐 Frontend (index.html)
+## Frontend (index.html)
 
 The frontend allows the user to:
 
@@ -81,14 +81,14 @@ No backend needed --- everything runs in the browser.
 
 ------------------------------------------------------------------------
 
-## 🛠 How to Run Locally
+## How to Run Locally
 
-### 1️⃣ Clone the repository
+### Clone the repository
 
     git clone https://github.com/yourname/yourrepo.git
     cd yourrepo
 
-### 2️⃣ Deploy the contract (if not deployed)
+### Deploy the contract (if not deployed)
 
 Deploy `AssetRegistry.sol` on Sepolia and update your `index.html`:
 
@@ -96,25 +96,25 @@ Deploy `AssetRegistry.sol` on Sepolia and update your `index.html`:
 const contractAddress = "YOUR_DEPLOYED_CONTRACT_ADDRESS";
 ```
 
-### 3️⃣ Open the frontend
+### Open the frontend
 
 Open `index.html` in your browser (MetaMask required).
 
 ------------------------------------------------------------------------
 
-## 🧪 Features Demo
+## Features Demo
 
-### ✔ Register an Asset
+### Register an Asset
 
 Enter an ID → Click **Register** → MetaMask transaction pops up.
 
-### ✔ Check Asset Owner
+### Check Asset Owner
 
 Enter an ID → Click **Check Owner** → Owner address displayed.
 
 ------------------------------------------------------------------------
 
-## 📘 Technologies Used
+## Technologies Used
 
 -   Solidity\
 -   Ethers.js\
