@@ -35,9 +35,9 @@ This project demonstrates a basic end-to-end decentralized application workflow 
 **Network Used:** Sepolia Test Network  
 
 **Contract Address:**  
-`<YOUR_CONTRACT_ADDRESS_HERE>`  
+0xAdD199b894cF5f0aba97C38261A2B04023a72873  
 
-**Etherscan Link:**  
+**The demo is live on this link:**  
 (https://maidhilidlcs25-cpu.github.io/Asset-registry-dapp/)
 
 
