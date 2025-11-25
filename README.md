@@ -39,7 +39,7 @@ This project demonstrates a basic end-to-end decentralized application workflow 
 **Etherscan Link:**  
 `https://sepolia.etherscan.io/address/<YOUR_CONTRACT_ADDRESS_HERE>`
 
-*(Replace these two placeholders after deployment)*
+
 
 ---
 
@@ -74,8 +74,7 @@ This project demonstrates a basic end-to-end decentralized application workflow 
 Just double-click `index.html`
 
 ### Option B — Run a Local Server
-```bash
-npx serve .
+
 
 ## Screenshot of the DApp
 
